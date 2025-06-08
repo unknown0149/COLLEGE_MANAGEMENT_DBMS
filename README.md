@@ -29,7 +29,13 @@ The Attendance Monitoring System is a software application designed to track and
 
 #### Database Configuration
 - Create a new database in MySQL for your Attendance Monitoring System.
-- Load the data from the db.sql file into the database
+- Load the data from the db.sql file into the database  
+  Example command:  
+  `mysql -u root -p attendance_db < db.sql`
+  > **Note:**  
+  > Make sure you run this command from the directory where your `db.sql` file is located, or provide the full path to `db.sql`.  
+  > Example with full path:  
+  > `mysql -u root -p attendance_db < C:\Users\admin\Desktop\VSFILES\projects\Attendance_monitoring_system\db.sql`
 - Update the following details in the `app.py` code with your credentials
     - Host: The hostname or IP address of the MySQL database server.
     - Port: The port number on which MySQL is running (default is usually 3306).

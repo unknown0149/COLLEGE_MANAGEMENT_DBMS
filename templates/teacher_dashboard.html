@@ -1,135 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Teacher Dashboard</title>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: url("{{ url_for('static', filename='bg.png') }}") no-repeat center center fixed;
-            background-size: cover;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
         }
-        
-        .dashboard-box {
-            background-color: rgba(0, 0, 0, 0.6);
-            margin-top: 25%;
-            margin-bottom: 5em;
-            padding: 1em;
-            color: #fff;
-            border-radius: 10px;
-            box-shadow: 2px 2px 15px 0px rgba(0, 3, 0, 0.7);
-        }
-        
-        .dashboard-title {
-            text-align: center;
-            margin-bottom: 2em;
-        }
-        
-        select {
-            display: block;
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-        }
-        
-        .class-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        
-        .class-list-item {
-            margin-bottom: 10px;
-        }
-        
-        .class-link {
-            display: inline-block;
-            padding: 8px;
-            background-color: #eee;
-            color: #333;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        
-        .class-link:hover {
-            background-color: #ddd;
-        }
-        
-        .add-class-link {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        
-        .add-class-link:hover {
-            background-color: #0056b3;
-        }
-        
         .nav {
-            margin: 0;
-            padding: 10px;
-            background-color: #0099CC;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
+            background: rgba(33,37,41,0.85);
+            padding: 1.2rem 2.5rem;
+            border-radius: 0 0 1.5rem 1.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+            backdrop-filter: blur(6px);
         }
         .nav a {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #333;
             color: #fff;
+            margin-left: 2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
             text-decoration: none;
-            border-radius: 5px;
-            margin-left: 20px;
+            transition: color 0.2s;
         }
         .nav a:hover {
-            background-color: black;
-            color: white;
+            color: #6dd5ed;
         }
-        
-        .profile-link {
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #22223b;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px #c2e9fb80;
+        }
+        .dashboard-box {
+            background: rgba(255,255,255,0.85);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.12);
+            padding: 2.5rem 3rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(8px);
+        }
+        .dashboard-title {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #2193b0;
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        select {
+            border-radius: 0.7rem;
+            padding: 0.7rem;
+            border: 1.5px solid #b2bec3;
+            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .class-list {
+            list-style: none;
+            padding: 0;
+        }
+        .class-list-item {
+            margin-bottom: 1.2rem;
+        }
+        .class-link {
             display: inline-block;
-            padding: 8px 16px;
-            background-color: #333;
+            padding: 0.6rem 1.5rem;
+            margin-right: 0.7rem;
+            background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
             color: #fff;
+            border-radius: 0.7rem;
             text-decoration: none;
-            border-radius: 5px;
-            margin-left:20px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px #6dd5ed40;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
         }
-        
-        .profile-link:hover {
-            background-color: black;
-        }
-        
-        .logout-link {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #333;
+        .class-link:hover {
+            background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
             color: #fff;
+            box-shadow: 0 4px 16px #2193b080;
+        }
+        .add-class-link {
+            background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+            color: #fff;
+            padding: 0.9rem 2.5rem;
+            border-radius: 0.7rem;
+            font-weight: 700;
+            font-size: 1.1rem;
             text-decoration: none;
-            border-radius: 5px;
-            margin-left:20px;
+            box-shadow: 0 2px 8px #43cea240;
+            transition: background 0.2s, box-shadow 0.2s;
         }
-        
-        .logout-link:hover {
-            background-color: black;
+        .add-class-link:hover {
+            background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+            color: #fff;
+            box-shadow: 0 4px 16px #185a9d80;
         }
-        .h1, h1 {
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-left: 40%;
-            margin-top: -45px;
-            margin-bottom: 20px;
+        @media (max-width: 768px) {
+            .dashboard-box {
+                padding: 1.2rem;
+            }
+            .nav {
+                padding: 1rem;
+            }
         }
-        
-        
     </style>
 </head>
 <body>
@@ -140,77 +123,85 @@
     <h1><strong>Teacher Dashboard</strong></h1>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-10">
                 <div class="dashboard-box">
-                    <h2 class="dashboard-title">Mark Attendance</h2>
-                    <select id="class-section-select">
-                        <option value="" disabled selected>Select Class Section</option>
-                        {% set addedSections = [] %}
+                    <h2 class="dashboard-title">Your Classes</h2>
+                    <div class="row">
                         {% for class in classes %}
-                            {% if class[2] == session['username'] and class[3] not in addedSections %}
-                                <option value="{{ class[3] }}">{{ class[3] }}</option>
-                                {% set _ = addedSections.append(class[3]) %}
-                            {% endif %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card shadow-sm border-0 h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ class[1] }} ({{ class[3] }})</h5>
+                                    <p class="card-text"><strong>Date:</strong> {{ class[4] }}</p>
+                                    <div class="d-grid gap-2">
+                                        <a href="/teacher/mark_attendance_students/{{ class[0] }}" class="btn btn-primary">Take Attendance</a>
+                                        <a href="/teacher/view_attendance/{{ class[0] }}" class="btn btn-outline-secondary btn-sm">View Attendance</a>
+                                        <a href="/teacher/students_in_class/{{ class[0] }}" class="btn btn-outline-info btn-sm">View Students</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="col-12">
+                            <div class="alert alert-info">No classes assigned yet.</div>
+                        </div>
                         {% endfor %}
-                    </select>
-                    
-                    <ul id="class-links" class="class-list" style="display: none;"></ul>
-                    
-                    <br>
-                    <div class="text-center">
-                        <a class="add-class-link" href="/teacher/add_class">Add Class</a>
                     </div>
+                    <div class="text-center mt-4">
+                        <a class="add-class-link" href="/teacher/add_class">+ Add Class</a>
+                    </div>
+                    <h4 class="mt-4">All Fees</h4>
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Fee ID</th>
+                                <th>Student</th>
+                                <th>Amount</th>
+                                <th>Due Date</th>
+                                <th>Paid</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for fee in fees %}
+                            <tr>
+                                <td>{{ fee[0] }}</td>
+                                <td>{{ fee[1] }}</td>
+                                <td>{{ fee[2] }}</td>
+                                <td>{{ fee[3] }}</td>
+                                <td>
+                                    {% if fee[4] %}
+                                        <span class="badge bg-success">Yes</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">No</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <h4 class="mt-4">Events</h4>
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for event in events %}
+                            <tr>
+                                <td>{{ event[0] }}</td>
+                                <td>{{ event[1] }}</td>
+                                <td>{{ event[2] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="/logout" class="btn btn-outline-danger mt-3">Logout</a>
                 </div>
             </div>
         </div>
     </div>
-    
-    <script>
-        const classSectionSelect = document.getElementById('class-section-select');
-        const classLinks = document.getElementById('class-links');
-    
-        classSectionSelect.addEventListener('change', function() {
-            const selectedSection = this.value;
-            showClassLinks(selectedSection);
-        });
-    
-        function showClassLinks(selectedSection) {
-            if (selectedSection) {
-                classLinks.style.display = 'block';
-                classLinks.innerHTML = '';
-    
-                const uniqueSections = new Set();
-                const classes = JSON.parse('{{ classes | tojson | safe }}');
-                for (let i = 0; i < classes.length; i++) {
-                    if (classes[i][2] === '{{ session['username'] }}') {
-                        uniqueSections.add(classes[i][3]);
-                    }
-                }
-    
-                for (const section of uniqueSections) {
-                    const option = document.createElement('option');
-                    option.value = section;
-                    option.innerText = section;
-                    
-                }
-    
-                for (let i = 0; i < classes.length; i++) {
-                    if (classes[i][2] === '{{ session['username'] }}' && classes[i][3] === selectedSection) {
-                        const classLink = document.createElement('li');
-                        classLink.className = 'class-list-item';
-                        const link = document.createElement('a');
-                        link.className = 'class-link';
-                        link.href = '/teacher/mark_attendance/' + classes[i][0];
-                        link.innerText = classes[i][1];
-                        classLink.appendChild(link);
-                        classLinks.appendChild(classLink);
-                    }
-                }
-            } else {
-                classLinks.style.display = 'none';
-                classLinks.innerHTML = '';
-            }
-        }
-    </script>
 </body>
 </html>
