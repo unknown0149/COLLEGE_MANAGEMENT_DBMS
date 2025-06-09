@@ -2,113 +2,106 @@
 <html>
 <head>
     <title>Admin Dashboard</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-            font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-            min-height: 100vh;
-        }
-        .admin-dashboard-card {
-            background: rgba(255,255,255,0.85);
-            border-radius: 1.5rem;
-            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.12);
-            margin: 4rem auto;
-            padding: 2.5rem 2rem;
-            max-width: 700px;
-            backdrop-filter: blur(8px);
-        }
-        h2 {
-            color: #2193b0;
-            font-weight: 800;
-            margin-bottom: 2rem;
-            text-align: center;
-        }
-        .btn-primary {
-            background: linear-gradient(90deg, #2193b0 0%, #6dd5ed 100%);
-            border: none;
-            font-weight: 700;
-            border-radius: 0.7rem;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(90deg, #6dd5ed 0%, #2193b0 100%);
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <div class="nav">
-        <a class="profile-link" href="/admin/admin_profile">Profile</a>
-        <a class="logout-link" href="/logout">Logout</a>
-    </div>
-    <h1><strong>Admin Dashboard</strong></h1>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="admin-dashboard-card">
-                    <h2 class="dashboard-title">Services</h2>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="service-box">
-                                <h3>Teacher Registration</h3>
-                                <p>Register teachers here!!</p>
-                                <a href="{{ url_for('register') }}" class="btn btn-primary">Register here</a>
-                            </div>
-                        </div>
-            
-                        <div class="col-md-4">
-                            <div class="service-box">
-                                <h3>Student Registration</h3>
-                                <p>Register and update student details here!!</p>
-                                <a href="{{ url_for('student_register') }}" class="btn btn-primary">Register here</a>
-                                <a href="{{ url_for('update_student') }}" class="btn btn-primary">Student details</a>
-                            </div>
-                        </div>
-                        
-            
-                        <div class="col-md-4">
-                            <div class="service-box">
-                                <h3>Attendance Report</h3>
-                                <p>Get daily attendance reports here!!</p>
-                                <a href="{{ url_for('get_attendance_report') }}" class="btn btn-primary">Get reports here</a>
-                            </div>
-                        </div>
+<body class="admin-body">
+    <nav class="navbar navbar-dark admin-navbar">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">College Management System</span>
+            <div class="d-flex align-items-center text-white">
+                <span class="me-3"><i class="fas fa-user-shield"></i> Welcome, Admin</span>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-4">
+        <div class="row g-4">
+            <!-- Academic Management -->
+            <div class="col-md-6 col-lg-3">
+                <div class="dashboard-card">
+                    <div class="card-icon bg-primary">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Academic</h3>
+                    <div class="links">
+                        <a href="{{ url_for('admin_exams') }}">
+                            <i class="fas fa-file-alt"></i> Exams
+                        </a>
+                        <a href="{{ url_for('admin_grades') }}">
+                            <i class="fas fa-chart-line"></i> Grades
+                        </a>
+                        <a href="{{ url_for('get_attendance_report') }}">
+                            <i class="fas fa-user-check"></i> Attendance
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Management -->
+            <div class="col-md-6 col-lg-3">
+                <div class="dashboard-card">
+                    <div class="card-icon bg-success">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Users</h3>
+                    <div class="links">
+                        <a href="{{ url_for('student_register') }}">
+                            <i class="fas fa-user-graduate"></i> Add Student
+                        </a>
+                        <a href="{{ url_for('register') }}">
+                            <i class="fas fa-chalkboard-teacher"></i> Add Teacher
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facilities -->
+            <div class="col-md-6 col-lg-3">
+                <div class="dashboard-card">
+                    <div class="card-icon bg-info">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Facilities</h3>
+                    <div class="links">
+                        <a href="{{ url_for('admin_books') }}">
+                            <i class="fas fa-book"></i> Library
+                        </a>
+                        <a href="{{ url_for('admin_hostels') }}">
+                            <i class="fas fa-home"></i> Hostels
+                        </a>
+                        <a href="{{ url_for('admin_fees') }}">
+                            <i class="fas fa-money-bill"></i> Fees
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Communication -->
+            <div class="col-md-6 col-lg-3">
+                <div class="dashboard-card">
+                    <div class="card-icon bg-warning">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Communication</h3>
+                    <div class="links">
+                        <a href="{{ url_for('admin_events') }}">
+                            <i class="fas fa-calendar"></i> Events
+                        </a>
+                        <a href="{{ url_for('admin_notifications') }}">
+                            <i class="fas fa-bell"></i> Notifications
+                        </a>
+                        <a href="{{ url_for('admin_documents') }}">
+                            <i class="fas fa-file"></i> Documents
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container py-5">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <a href="/admin/exams" class="btn btn-primary w-100 py-3">Exams</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/admin/grades" class="btn btn-success w-100 py-3">Grades</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/admin/fees" class="btn btn-warning w-100 py-3">Fees</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/admin/books" class="btn btn-info w-100 py-3">Library Books</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/admin/hostels" class="btn btn-secondary w-100 py-3">Hostels</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/admin/notifications" class="btn btn-dark w-100 py-3">Notifications</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/admin/documents" class="btn btn-primary w-100 py-3">Documents</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/admin/events" class="btn btn-danger w-100 py-3">Events</a>
-            </div>
-            <div class="col-md-4">
-                <a href="/admin/get_attendance_report" class="btn btn-outline-primary w-100 py-3">Attendance Report</a>
-            </div>
-        </div>
-        <a href="/logout" class="btn btn-outline-danger mt-5">Logout</a>
-    </div>
-    </body>
+</body>
 </html>

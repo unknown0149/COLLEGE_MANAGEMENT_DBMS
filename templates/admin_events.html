@@ -2,37 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Events | College Management System</title>
+    <title>Events Management</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="bg-light">
-<div class="container py-5">
-    <div class="card shadow-lg">
-        <div class="card-header bg-danger text-white">
-            <h2 class="mb-0">Events</h2>
+<div class="container py-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Events Management</h2>
         </div>
         <div class="card-body">
-            <table class="table table-hover table-bordered align-middle">
+            <form method="POST" class="add-form mb-4">
+                <h3>Add New Event</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <input type="text" name="event_name" class="form-control" placeholder="Event Name" required>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="event_date" class="form-control" required>
+                    </div>
+                    <div class="col-md-4">
+                        <textarea name="description" class="form-control" placeholder="Description" required></textarea>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-primary w-100">Add</button>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table">
                 <thead class="table-dark">
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
+                        <th>Event Name</th>
                         <th>Date</th>
                         <th>Description</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for event in events %}
                     <tr>
-                        <td>{{ event[0] }}</td>
-                        <td>{{ event[1] }}</td>
-                        <td>{{ event[2] }}</td>
-                        <td>{{ event[3] }}</td>
+                        <td>{{ event.event_name }}</td>
+                        <td>{{ event.event_date }}</td>
+                        <td>{{ event.description }}</td>
+                        <td>
+                            <form method="POST" action="{{ url_for('admin_events') }}" style="display: inline;">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="event_id" value="{{ event.event_id }}">
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            <a href="/admin/admin_dashboard" class="btn btn-secondary mt-3">Back to Dashboard</a>
+
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
         </div>
     </div>
 </div>

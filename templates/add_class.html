@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Add Class</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
@@ -38,27 +39,34 @@
 </head>
 <body>
     <div class="add-class-card">
-        <h2>Add Class</h2>
+        <h2>Add New Class</h2>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
         <form method="POST" action="{{ url_for('add_class') }}">
             <div class="mb-3">
-                <label for="class_name" class="form-label">Subject Name</label>
+                <label for="class_name" class="form-label">Class Name</label>
                 <input type="text" class="form-control" id="class_name" name="class_name" placeholder="Subject" required>
             </div>
+            
             <div class="mb-3">
-                <label for="class_section" class="form-label">Class Section</label>
-                <select id="class_section" name="class_section" class="form-select" required>
-                    <option value="" disabled selected>Select Class Section</option>
-                    {% for section in class_sections %}
-                    <option value="{{ section[0] }}">{{ section[0] }}</option>
-                    {% endfor %}
-                </select>
+                <label for="class_sec" class="form-label">Section</label>
+                <input type="text" class="form-control" id="class_sec" name="class_sec" required>
             </div>
+            
             <div class="mb-3">
-                <label for="attendance_date" class="form-label">Attendance Date</label>
-                <input type="date" class="form-control" id="attendance_date" name="attendance_date" required pattern="\d{4}-\d{2}-\d{2}" title="Please enter a date in the format yyyy-mm-dd">
+                <label for="class_date" class="form-label">Date</label>
+                <input type="date" class="form-control" id="class_date" name="class_date" required pattern="\d{4}-\d{2}-\d{2}" title="Please enter a date in the format yyyy-mm-dd">
             </div>
+            
             <button type="submit" class="btn btn-primary w-100">Add Class</button>
         </form>
+        <a href="{{ url_for('teacher_classes') }}" class="btn btn-secondary w-100" style="margin-top: 1rem;">Back to Classes</a>
     </div>
 </body>
 </html>

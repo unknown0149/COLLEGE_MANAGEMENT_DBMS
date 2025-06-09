@@ -6,9 +6,8 @@
 </head>
 <body>
     <div class="container">
-        <h2>Mark Attendance</h2>
-        <h3>{{ class_name }} - Section {{ class_sec }}</h3>
-        <p>Date: {{ class_date }}</p>
+        <h2>Mark Attendance - {{ class_info.class_name }}</h2>
+        <h3>Section: {{ class_info.class_sec }}</h3>
 
         {% with messages = get_flashed_messages() %}
             {% if messages %}
@@ -23,21 +22,24 @@
                 <tr>
                     <th>Student ID</th>
                     <th>Name</th>
-                    <th>Present</th>
+                    <th>Attendance</th>
                 </tr>
                 {% for student in students %}
                 <tr>
-                    <td>{{ student[0] }}</td>
-                    <td>{{ student[1] }}</td>
+                    <td>{{ student.student_id }}</td>
+                    <td>{{ student.student_name }}</td>
                     <td>
-                        <input type="checkbox" name="attendance" value="{{ student[0] }}">
+                        <select name="attendance_{{ student.student_id }}">
+                            <option value="present">Present</option>
+                            <option value="absent">Absent</option>
+                        </select>
                     </td>
                 </tr>
                 {% endfor %}
             </table>
             <button type="submit" class="btn">Submit Attendance</button>
         </form>
-        <a href="{{ url_for('teacher_classes') }}" class="btn">Back to Classes</a>
+        <a href="{{ url_for('teacher_dashboard') }}" class="btn">Back to Dashboard</a>
     </div>
 </body>
 </html>

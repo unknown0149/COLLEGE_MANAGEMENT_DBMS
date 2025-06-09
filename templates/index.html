@@ -1,98 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Attendance Monitoring System</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <style>
-    body {
-      background: url("{{ url_for('static', filename='bg.png') }}") no-repeat center center fixed;
-      background-size: cover;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      background: rgba(0, 0, 0, 0.6);
-      margin: 3em auto 5em;
-      padding: 1em;
-      color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-    }
-    .section-title {
-      margin: 0;
-      padding: 1em 0;
-      text-align: center;
-    }
-    .login-btn {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 18px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .login-btn:hover {
-      background-color: #0069d9;
-    }
-    .features-section {
-      margin: 3em auto 5em;
-      padding: 2em;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-      text-align: center;
-      color: #fff;
-    }
-    .features-title {
-      margin: 0 0 2em;
-      color: #fff;
-    }
-    .features-list {
-      list-style-type: none;
-      padding: 0;
-      margin: 1em 0;
-    }
-    .features-list li {
-      margin-bottom: 1em;
-      display: flex;
-      align-items: center;
-    }
-    .features-list li:before {
-      content: "\2022";
-      color: #007bff;
-      font-weight: bold;
-      display: inline-block;
-      width: 1em;
-      margin-right: 0.5em;
-    }
-  </style>
+    <title>BMS Institute of Technology and Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <div class="container">
-    <h1 class="section-title">Attendance Monitoring System</h1>
-    <div class="row justify-content-center">
-      <div class="col-md-4">
-        <div class="text-center">
-          <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top main-nav">
+        <div class="container">
+            <a class="navbar-brand" href="#">BMSIT&M</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="features-section">
-      <h2 class="features-title">Features of the Attendance Monitoring System:</h2>
-      <ul class="features-list">
-        <li>Efficient and Automated Attendance Tracking</li>
-        <li>Real-time Attendance Reporting</li>
-        <li>Easy Integration with Existing Systems</li>
-        <li>User-friendly Interface</li>
-        <li>Secure Data Management</li>
-      </ul>
-    </div>
-  </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container text-center">
+            <h1>BMS Institute of Technology and Management</h1>
+            <p class="lead">Excellence in Education Since 1946</p>
+            <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">Portal Login</a>
+        </div>
+    </header>
+
+    <section class="features-section">
+        <div class="container">
+            <h2 class="text-center mb-5">College Management Portal</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-user-graduate"></i>
+                        <h3>Student Zone</h3>
+                        <p>Access attendance, grades, and course materials</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h3>Faculty Portal</h3>
+                        <p>Manage classes, attendance, and assessments</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-cogs"></i>
+                        <h3>Administration</h3>
+                        <p>Complete college management system</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Contact Us</h4>
+                    <p>Yelahanka, Bangalore - 560064</p>
+                    <p>Email: info@bmsit.in</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p>&copy; 2025 BMSIT&M. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
