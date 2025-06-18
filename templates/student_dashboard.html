@@ -5,33 +5,278 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --success-color: #4cc9f0;
+            --warning-color: #f72585;
+            --light-bg: #f8f9fa;
+            --dark-bg: #212529;
+        }
+
+        .student-body {
+            background-color: var(--light-bg);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .student-navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+        }
+
+        .student-navbar .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .student-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            height: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+        }
+
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            background: rgba(67, 97, 238, 0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .student-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--dark-bg);
+            margin-bottom: 1rem;
+        }
+
+        .profile-info p {
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+
+        .profile-info strong {
+            color: var(--dark-bg);
+        }
+
+        .attendance-stats {
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .percentage {            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 0 1rem;
+        }
+        
+        .timeline-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background-color: var(--primary-color);
+        }
+        
+        .timeline-badge.urgent {
+            background-color: var(--warning-color);
+        }
+        
+        .timeline-badge.today {
+            background-color: var(--accent-color);
+        }
+        
+        .timeline-content {
+            background: rgba(0,0,0,0.03);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        
+        .events-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .events-header {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            color: white;
+            padding: 1.25rem;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .badge {
+            padding: 0.5em 1em;
+            font-weight: 500;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table th {
+            font-weight: 600;
+            color: var(--dark-bg);
+        }
+
+        .event-item {
+            padding: 1rem;
+            border-radius: 8px;
+            background: rgba(67, 97, 238, 0.05);
+            margin-bottom: 1rem;
+        }
+
+        .event-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .event-item h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .event-item p {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-item small {
+            color: #adb5bd;
+        }
+
+        /* Remove duplicate timeline styles */
+        .timeline {
+            position: relative;
+            padding: 0 1rem;
+        }
+        
+        .timeline-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background-color: var(--primary-color);
+        }
+        
+        .timeline-content {
+            background: rgba(0,0,0,0.03);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        .bg-gradient {
+            border-radius: 10px 10px 0 0;
+            padding: 1rem;
+        }
+        .bg-danger {
+            background-color: #dc3545;
+        }
+        .bg-warning {
+            background-color: #ffc107;
+        }
+        .bg-primary {
+            background-color: #0d6efd;
+        }
+
+        @media (max-width: 768px) {
+            .student-card {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
 </head>
 <body class="student-body">
-    <nav class="navbar navbar-dark student-navbar">
+    <nav class="navbar navbar-expand-lg student-navbar">
         <div class="container-fluid">
-            <span class="navbar-brand">Student Portal</span>
-            <div class="d-flex align-items-center">
-                <span class="text-white me-3">Welcome, {{ student[1] }}</span>
-                <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Logout</a>
+            <span class="navbar-brand">
+                <i class="fas fa-graduation-cap me-2"></i>
+                Student Portal
+            </span>
+            <div class="d-flex align-items-center">                <span class="text-white me-3">
+                    <i class="fas fa-user-circle me-1"></i>
+                    Welcome, {{ student.student_name }}
+                </span>
+                <a href="{{ url_for('logout') }}" class="btn btn-light btn-sm">
+                    <i class="fas fa-sign-out-alt me-1"></i>
+                    Logout
+                </a>
             </div>
         </div>
     </nav>
 
-    <div class="container py-4">
-        <div class="row g-4">
-            <!-- Profile Card -->
-            <div class="col-md-6 col-lg-4">
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Profile Info Card -->
+            <div class="col-lg-4 mb-4">
                 <div class="student-card profile-card">
                     <div class="card-icon">
                         <i class="fas fa-user-circle"></i>
                     </div>
-                    <h3>My Profile</h3>
-                    <div class="profile-info">
-                        <p><strong>ID:</strong> {{ student[0] }}</p>
-                        <p><strong>Name:</strong> {{ student[1] }}</p>
-                        <p><strong>Class:</strong> {{ student[3] }}</p>
-                        <p><strong>Email:</strong> {{ student[2] }}</p>
-                        <p><strong>Phone:</strong> {{ student[4] }}</p>
+                    <h3>My Profile</h3>                    <div class="profile-info">
+                        <p>
+                            <i class="fas fa-id-card me-2 text-muted"></i>
+                            <strong>ID:</strong> {{ student.old_student_id }}
+                        </p>
+                        <p>
+                            <i class="fas fa-user me-2 text-muted"></i>
+                            <strong>Name:</strong> {{ student.student_name }}
+                        </p>
+                        <p>
+                            <i class="fas fa-graduation-cap me-2 text-muted"></i>
+                            <strong>Class:</strong> {{ student.class_sec }}
+                        </p>
+                        <p>
+                            <i class="fas fa-envelope me-2 text-muted"></i>
+                            <strong>Email:</strong> {{ student.email }}
+                        </p>
+                        <p>
+                            <i class="fas fa-phone me-2 text-muted"></i>
+                            <strong>Phone:</strong> {{ student.phone }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -47,14 +292,26 @@
                         {% set present_count = attendance|selectattr(2, 'equalto', 'present')|list|length %}
                         {% set total = attendance|length %}
                         {% if total > 0 %}
-                            <div class="percentage">{{ (present_count/total * 100)|round }}%</div>
-                            <p>Present: {{ present_count }} / {{ total }} days</p>
+                            {% set percentage = (present_count/total * 100)|round %}
+                            <div class="percentage" style="color: {{ 'var(--success-color)' if percentage >= 75 else 'var(--warning-color)' }}">
+                                {{ percentage }}%
+                            </div>
+                            <p class="mb-3">Present: {{ present_count }} / {{ total }} days</p>
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar {{ 'bg-success' if percentage >= 75 else 'bg-warning' }}" 
+                                     role="progressbar" 
+                                     style="width: {{ percentage }}%" 
+                                     aria-valuenow="{{ percentage }}" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
+                                </div>
+                            </div>
                         {% else %}
                             <p>No attendance records yet</p>
                         {% endif %}
                     </div>
-                    <div class="recent-attendance">
-                        <h4>Recent Attendance</h4>
+                    <div class="recent-attendance mt-4">
+                        <h4 class="mb-3">Recent Attendance</h4>
                         <div class="table-responsive">
                             <table class="table table-sm">
                                 <thead>
@@ -66,10 +323,16 @@
                                 <tbody>
                                     {% for record in attendance[:5] %}
                                     <tr>
-                                        <td>{{ record[1] }}</td>
-                                        <td><span class="badge {{ 'bg-success' if record[2] == 'present' else 'bg-danger' }}">
-                                            {{ record[2] }}
-                                        </span></td>
+                                        <td>
+                                            <i class="fas fa-calendar-day me-1 text-muted"></i>
+                                            {{ record[1] }}
+                                        </td>
+                                        <td>
+                                            <span class="badge {{ 'bg-success' if record[2] == 'present' else 'bg-danger' }}">
+                                                <i class="fas {{ 'fa-check' if record[2] == 'present' else 'fa-times' }} me-1"></i>
+                                                {{ record[2]|title }}
+                                            </span>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -88,42 +351,77 @@
                     <h3>Fee Status</h3>
                     {% if fees %}
                         {% for fee in fees %}
-                        <div class="fee-item">
-                            <h4>Amount: ₹{{ fee[0] }}</h4>
-                            <p>Due Date: {{ fee[1] }}</p>
-                            <div class="status">
+                        <div class="fee-item mb-3 p-3 rounded">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h4 class="mb-0">
+                                    <i class="fas fa-rupee-sign me-1"></i>
+                                    {{ fee[0] }}
+                                </h4>
                                 {% if fee[2] %}
-                                    <span class="badge bg-success">Paid</span>
-                                    <p>Payment Date: {{ fee[3] }}</p>
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check-circle me-1"></i>
+                                        Paid
+                                    </span>
                                 {% else %}
-                                    <span class="badge bg-warning">Pending</span>
+                                    <span class="badge bg-warning">
+                                        <i class="fas fa-clock me-1"></i>
+                                        Pending
+                                    </span>
+                                {% endif %}
+                            </div>
+                            <div class="fee-details">
+                                <p class="mb-1">
+                                    <i class="fas fa-calendar-alt me-1 text-muted"></i>
+                                    Due: {{ fee[1] }}
+                                </p>
+                                {% if fee[2] and fee[3] %}
+                                <p class="mb-0 text-success">
+                                    <i class="fas fa-check me-1"></i>
+                                    Paid on {{ fee[3] }}
+                                </p>
                                 {% endif %}
                             </div>
                         </div>
                         {% endfor %}
                     {% else %}
-                        <p>No fee records found</p>
+                        <div class="text-center text-muted py-3">
+                            <i class="fas fa-info-circle mb-2" style="font-size: 2rem;"></i>
+                            <p class="mb-0">No fee records found</p>
+                        </div>
                     {% endif %}
                 </div>
             </div>
 
             <!-- Events Card -->
-            <div class="col-md-6">
-                <div class="student-card events-card">
+            <div class="col-lg-4 mb-4">
+                <div class="student-card">
                     <div class="card-icon">
                         <i class="fas fa-calendar-alt"></i>
                     </div>
                     <h3>Upcoming Events</h3>
                     {% if events %}
                         {% for event in events %}
-                        <div class="event-item">
-                            <h4>{{ event[0] }}</h4>
-                            <p>{{ event[2] }}</p>
-                            <small>Date: {{ event[1] }}</small>
-                        </div>
+                            <div class="event-item mb-3 p-3 rounded" style="background: rgba(67, 97, 238, 0.1);">
+                                <h5 class="mb-1">{{ event.title }}</h5>
+                                <div class="text-muted mb-2">
+                                    <i class="fas fa-clock me-1"></i>
+                                    {% if event.days_until == 0 %}
+                                        <span class="badge bg-danger">Today</span>
+                                    {% elif event.days_until == 1 %}
+                                        <span class="badge bg-warning">Tomorrow</span>
+                                    {% else %}
+                                        <span class="badge bg-primary">In {{ event.days_until }} days</span>
+                                    {% endif %}
+                                    <small class="ms-2">{{ event.date }}</small>
+                                </div>
+                                <p class="mb-0 small">{{ event.description }}</p>
+                            </div>
                         {% endfor %}
                     {% else %}
-                        <p>No upcoming events</p>
+                        <div class="text-center py-4">
+                            <i class="fas fa-calendar-xmark fa-2x text-muted mb-2"></i>
+                            <p class="text-muted mb-0">No upcoming events</p>
+                        </div>
                     {% endif %}
                 </div>
             </div>
@@ -135,8 +433,9 @@
                         <i class="fas fa-file-alt"></i>
                     </div>
                     <h3>Class Documents</h3>
+                    {% if documents %}
                     <div class="table-responsive">
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Title</th>
@@ -147,16 +446,36 @@
                             <tbody>
                                 {% for doc in documents %}
                                 <tr>
-                                    <td>{{ doc.doc_title }}</td>
-                                    <td>{{ doc.doc_type }}</td>
                                     <td>
-                                        <a href="{{ doc.doc_path }}" class="btn btn-sm btn-primary">View</a>
+                                        <i class="fas fa-file-{{ 'pdf' if doc.doc_type == 'syllabus' 
+                                            else 'text' if doc.doc_type == 'notes'
+                                            else 'archive' if doc.doc_type == 'assignment'
+                                            else 'alt' }} me-2 text-muted">
+                                        </i>
+                                        {{ doc.doc_title }}
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-light text-dark">
+                                            {{ doc.doc_type|title }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="{{ doc.doc_path }}" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-download me-1"></i>
+                                            View
+                                        </a>
                                     </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
+                    {% else %}
+                    <div class="text-center text-muted py-3">
+                        <i class="fas fa-folder-open mb-2" style="font-size: 2rem;"></i>
+                        <p class="mb-0">No documents available</p>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

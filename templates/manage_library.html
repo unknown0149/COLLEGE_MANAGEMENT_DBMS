@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Management - Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('admin_dashboard') }}">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+            <span class="navbar-text">
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </span>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Library Management</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Add Book Form -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Add New Book</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage_library') }}">
+                    <input type="hidden" name="action" value="add_book">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <input type="text" name="title" class="form-control" placeholder="Book Title" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <input type="text" name="author" class="form-control" placeholder="Author" required>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <input type="text" name="isbn" class="form-control" placeholder="ISBN" required>
+                        </div>
+                        <div class="col-md-2 mb-3">
+                            <input type="number" name="quantity" class="form-control" placeholder="Quantity" required min="1">
+                        </div>
+                        <div class="col-md-1 mb-3">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Books List -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Available Books</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>ISBN</th>
+                                <th>Total Quantity</th>
+                                <th>Available</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for book in books %}
+                            <tr>
+                                <td>{{ book.title }}</td>
+                                <td>{{ book.author }}</td>
+                                <td>{{ book.isbn }}</td>
+                                <td>{{ book.total_quantity }}</td>
+                                <td>{{ book.available_quantity }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#issueBookModal{{ book._id }}">
+                                        Issue
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Currently Issued Books -->
+        <div class="card">
+            <div class="card-header">
+                <h4>Currently Issued Books</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Book Title</th>
+                                <th>Issue Date</th>
+                                <th>Due Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students_with_issued_books %}
+                                {% for issue in student.active_issues %}
+                                <tr>
+                                    <td>{{ student.student_name }}</td>
+                                    <td>{{ issue.book_title }}</td>
+                                    <td>{{ issue.issue_date }}</td>
+                                    <td>{{ issue.due_date }}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#returnBookModal{{ student._id }}_{{ issue.book_ref }}">
+                                            Return
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Issue Book Modals -->
+    {% for book in books %}
+    <div class="modal fade" id="issueBookModal{{ book._id }}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Issue Book: {{ book.title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST" action="{{ url_for('manage_library') }}">
+                    <input type="hidden" name="action" value="issue_book">
+                    <input type="hidden" name="book_id" value="{{ book._id }}">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Student ID</label>
+                            <input type="text" name="student_id" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Issue Date</label>
+                            <input type="date" name="issue_date" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Due Date</label>
+                            <input type="date" name="due_date" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Issue Book</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Return Book Modals -->
+    {% for student in students_with_issued_books %}
+        {% for issue in student.active_issues %}
+        <div class="modal fade" id="returnBookModal{{ student._id }}_{{ issue.book_ref }}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Return Book: {{ issue.book_title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <form method="POST" action="{{ url_for('manage_library') }}">
+                        <input type="hidden" name="action" value="return_book">
+                        <input type="hidden" name="student_id_return" value="{{ student.old_student_id }}">
+                        <input type="hidden" name="book_id_return" value="{{ issue.book_ref }}">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Return Date</label>
+                                <input type="date" name="return_date" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Return Book</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% endfor %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

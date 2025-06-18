@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hostel Management - Admin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('admin_dashboard') }}">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+            <span class="navbar-text">
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </span>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Hostel Management</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Add Hostel Form -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Add New Hostel</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage_hostels') }}">
+                    <input type="hidden" name="action" value="add">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <input type="text" name="hostel_name" class="form-control" placeholder="Hostel Name" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <input type="number" name="capacity" class="form-control" placeholder="Total Capacity" required min="1">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <button type="submit" class="btn btn-primary">Add Hostel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Hostels List -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Existing Hostels</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Hostel Name</th>
+                                <th>Total Capacity</th>
+                                <th>Current Occupancy</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for hostel in hostels %}
+                            <tr>
+                                <td>{{ hostel.hostel_name }}</td>
+                                <td>{{ hostel.capacity }}</td>
+                                <td>{{ hostel.current_occupancy }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#allocateModal{{ hostel._id }}">
+                                        Allocate Room
+                                    </button>
+                                    <a href="{{ url_for('view_hostel_allocations', hostel_id=hostel._id) }}" class="btn btn-sm btn-secondary">
+                                        View Allocations
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Allocations -->
+        <div class="card">
+            <div class="card-header">
+                <h4>Current Hostel Allocations</h4>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Student ID</th>
+                                <th>Hostel</th>
+                                <th>Room Number</th>
+                                <th>Allocation Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students_with_hostel %}
+                            <tr>
+                                <td>{{ student.student_name }}</td>
+                                <td>{{ student.old_student_id }}</td>
+                                {% for hostel in hostels %}
+                                    {% if student.hostel_allocation.hostel_ref == hostel._id %}
+                                        <td>{{ hostel.hostel_name }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                                <td>{{ student.hostel_allocation.room_number }}</td>
+                                <td>{{ student.hostel_allocation.allocation_date }}</td>
+                                <td>
+                                    <form method="POST" action="{{ url_for('manage_hostels') }}" style="display: inline;">
+                                        <input type="hidden" name="action" value="deallocate">
+                                        <input type="hidden" name="student_id" value="{{ student.old_student_id }}">
+                                        <button type="submit" class="btn btn-sm btn-danger">Deallocate</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Allocation Modals -->
+    {% for hostel in hostels %}
+    <div class="modal fade" id="allocateModal{{ hostel._id }}" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Allocate Room in {{ hostel.hostel_name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="POST" action="{{ url_for('manage_hostels') }}">
+                    <input type="hidden" name="action" value="allocate">
+                    <input type="hidden" name="hostel_id" value="{{ hostel._id }}">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">Student ID</label>
+                            <select name="student_id" class="form-control" required>
+                                <option value="">Select Student</option>
+                                {% for student in all_students %}
+                                    {% if not student.hostel_allocation %}
+                                        <option value="{{ student.old_student_id }}">{{ student.student_name }} (ID: {{ student.old_student_id }})</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Room Number</label>
+                            <input type="text" name="room_number" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Allocate Room</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

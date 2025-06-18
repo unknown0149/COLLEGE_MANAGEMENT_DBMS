@@ -13,40 +13,59 @@
         <div class="card-header bg-primary text-white">
             <h2 class="mb-0">Events Management</h2>
         </div>
-        <div class="card-body">
-            <form method="POST" class="add-form mb-4">
+        <div class="card-body">            <form method="POST" class="add-form mb-4">
                 <h3>Add New Event</h3>
-                <div class="row">
+                <input type="hidden" name="action" value="add">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="title">Event Title</label>
+                            <input type="text" id="title" name="title" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="event_date">Event Date</label>
+                            <input type="date" id="event_date" name="event_date" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" class="form-control" rows="3" required></textarea>
+                        </div>
+                    </div>
                     <div class="col-md-4">
-                        <input type="text" name="event_name" class="form-control" placeholder="Event Name" required>
+                        <div class="form-group">
+                            <label for="target_role">Target Audience</label>
+                            <select id="target_role" name="target_role" class="form-control" required>
+                                <option value="all">Everyone</option>
+                                <option value="student">Students Only</option>
+                                <option value="teacher">Teachers Only</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-3">
-                        <input type="date" name="event_date" class="form-control" required>
-                    </div>
-                    <div class="col-md-4">
-                        <textarea name="description" class="form-control" placeholder="Description" required></textarea>
-                    </div>
-                    <div class="col-md-1">
-                        <button type="submit" class="btn btn-primary w-100">Add</button>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Add Event</button>
                     </div>
                 </div>
             </form>
 
             <table class="table">
-                <thead class="table-dark">
-                    <tr>
+                <thead class="table-dark">                    <tr>
                         <th>Event Name</th>
                         <th>Date</th>
                         <th>Description</th>
+                        <th>Target Audience</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for event in events %}
-                    <tr>
-                        <td>{{ event.event_name }}</td>
+                    {% for event in events %}                    <tr>
+                        <td>{{ event.title }}</td>
                         <td>{{ event.event_date }}</td>
                         <td>{{ event.description }}</td>
+                        <td>{{ event.target_role }}</td>
                         <td>
                             <form method="POST" action="{{ url_for('admin_events') }}" style="display: inline;">
                                 <input type="hidden" name="action" value="delete">

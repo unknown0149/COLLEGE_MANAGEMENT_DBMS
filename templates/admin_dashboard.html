@@ -34,8 +34,7 @@
                         </a>
                         <a href="{{ url_for('admin_grades') }}">
                             <i class="fas fa-chart-line"></i> Grades
-                        </a>
-                        <a href="{{ url_for('get_attendance_report') }}">
+                        </a>                        <a href="{{ url_for('admin_view_attendance') }}">
                             <i class="fas fa-user-check"></i> Attendance
                         </a>
                     </div>
@@ -48,10 +47,15 @@
                     <div class="card-icon bg-success">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3>Users</h3>
-                    <div class="links">
+                    <h3>Users</h3>                    <div class="links">
                         <a href="{{ url_for('student_register') }}">
-                            <i class="fas fa-user-graduate"></i> Add Student
+                            <i class="fas fa-user-plus"></i> Add Student
+                        </a>
+                        <a href="{{ url_for('view_students') }}">
+                            <i class="fas fa-user-graduate"></i> View Students
+                        </a>
+                        <a href="{{ url_for('get_student') }}">
+                            <i class="fas fa-user-edit"></i> Update Student
                         </a>
                         <a href="{{ url_for('register') }}">
                             <i class="fas fa-chalkboard-teacher"></i> Add Teacher
@@ -66,12 +70,11 @@
                     <div class="card-icon bg-info">
                         <i class="fas fa-building"></i>
                     </div>
-                    <h3>Facilities</h3>
-                    <div class="links">
-                        <a href="{{ url_for('admin_books') }}">
+                    <h3>Facilities</h3>                    <div class="links">
+                        <a href="{{ url_for('manage_library') }}">
                             <i class="fas fa-book"></i> Library
                         </a>
-                        <a href="{{ url_for('admin_hostels') }}">
+                        <a href="{{ url_for('manage_hostels') }}">
                             <i class="fas fa-home"></i> Hostels
                         </a>
                         <a href="{{ url_for('admin_fees') }}">
@@ -88,14 +91,12 @@
                         <i class="fas fa-comments"></i>
                     </div>
                     <h3>Communication</h3>
-                    <div class="links">
-                        <a href="{{ url_for('admin_events') }}">
+                    <div class="links">                        <a href="{{ url_for('admin_events') }}">
                             <i class="fas fa-calendar"></i> Events
                         </a>
-                        <a href="{{ url_for('admin_notifications') }}">
+                        <a href="{{ url_for('admin_view_notifications') }}">
                             <i class="fas fa-bell"></i> Notifications
-                        </a>
-                        <a href="{{ url_for('admin_documents') }}">
+                        </a>                        <a href="{{ url_for('admin_documents') }}">
                             <i class="fas fa-file"></i> Documents
                         </a>
                     </div>

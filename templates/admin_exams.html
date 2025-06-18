@@ -16,17 +16,20 @@
             <form method="POST" class="add-form mb-4">
                 <h3>Add New Exam</h3>
                 <div class="mb-3">
-                    <label for="class_id" class="form-label">Select Class</label>
-                    <select name="class_id" id="class_id" class="form-select" required>
+                    <label for="class_id" class="form-label">Select Class</label>                    <select name="class_id" id="class_id" class="form-select" required>
                         <option value="">Select Class</option>
                         {% for class in classes %}
-                        <option value="{{ class.class_id }}">{{ class.class_name }}</option>
+                        <option value="{{ class }}">{{ class }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="exam_name" class="form-label">Exam Name</label>
                     <input type="text" name="exam_name" id="exam_name" class="form-control" placeholder="Exam Name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject Name" required>
                 </div>
                 <div class="mb-3">
                     <label for="exam_date" class="form-label">Exam Date</label>

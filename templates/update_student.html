@@ -171,14 +171,13 @@
         {% if err %}
             <p class="err">{{ err }}</p>
         {% endif %}
-        {% if student %}
-            <div class="student-profile">
+        {% if student %}            <div class="student-profile">
                 <h2>Student Profile</h2>
-                <p><strong>Student ID:</strong> {{ student[0]}}</p>
-                <p><strong>Name:</strong> {{ student[1] }}</p>
-                <p><strong>Email:</strong> {{ student[2] }}</p>
-                <p><strong>Class:</strong> {{ student[3] }}</p>
-                <p><strong>Phone:</strong> {{ student[4] }}</p>
+                <p><strong>Student ID:</strong> {{ student.old_student_id }}</p>
+                <p><strong>Name:</strong> {{ student.student_name }}</p>
+                <p><strong>Email:</strong> {{ student.email }}</p>
+                <p><strong>Class:</strong> {{ student.class_sec }}</p>
+                <p><strong>Phone:</strong> {{ student.phone }}</p>
             </div>
         {% endif %}
         <h2><strong>Update Student Details</strong></h2>

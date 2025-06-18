@@ -1,59 +1,77 @@
-# Attendance Monitoring System
+# College Management System
 
-The Attendance Monitoring System is a software application designed to track and manage attendance records for organizations, schools, or any other group that requires attendance tracking. This system provides an efficient and automated way of recording attendance, reducing manual effort and ensuring accuracy.
+The College Management System is a comprehensive software application designed to streamline and automate various administrative tasks in an educational institution. This system provides features for managing students, teachers, attendance, documents, events, fees, and more, making it an all-in-one solution for college administration.
 
 ## Features
 
-- **User Authentication**: Secure user authentication and authorization system to ensure only authorized users can access the system.
-- **Attendance Recording**: Easy and convenient attendance recording for individuals or groups, allowing users to mark attendance with just a few clicks.
-- **Real-time Tracking**: Real-time monitoring and tracking of attendance status, providing instant updates on attendance records.
-- **Reporting and Analytics**: Generate comprehensive attendance reports and analytics, including attendance summaries, trends, and individual attendance records.
-- **Notifications**: Automated notifications to remind users of upcoming events, classes, or meetings and send alerts for absentees.
-- **Data Management**: Efficient storage and management of attendance data, allowing users to search, filter, and organize attendance records easily.
-- **Integration**: Seamless integration with existing systems or tools such as databases, student information systems, or employee management systems.
-- **Customization**: Flexible configuration options to adapt the system to specific organizational requirements and workflows.
-- **User-Friendly Interface**: Intuitive and easy-to-use interface for both administrators and users, ensuring a smooth user experience.
-- **Scalability**: Ability to handle a large number of users and attendance records while maintaining performance and reliability.
+- **Multi-User Authentication**: Secure login system with different roles for admin, teachers, and students.
+- **Student Management**: Complete student lifecycle management including registration, profile updates, and academic tracking.
+- **Teacher Management**: Teacher registration, profile management, and class assignment features.
+- **Attendance System**: Comprehensive attendance tracking system for teachers to mark and monitor student attendance.
+- **Document Management**: Secure storage and management of academic documents and records.
+- **Events Management**: Create and manage college events and notifications.
+- **Fee Management**: Track and manage student fees and payment records.
+- **Library Management**: Digital library system for managing books and resources.
+- **Hostel Management**: Features for managing student hostel accommodations.
+- **Exam Management**: Tools for scheduling and managing examinations.
+- **Grades Management**: System for recording and tracking student academic performance.
+- **User-Friendly Interface**: Clean and intuitive interface for all user roles.
 
 ## Getting Started
 
 ### Prerequisites
 
-- Python: Make sure you have Python installed on your machine. You can download Python from the official website: python.org.
+- Python 3.8 or higher: Download and install from [python.org](https://python.org)
+- MongoDB: Install MongoDB Community Edition from [mongodb.com](https://www.mongodb.com/try/download/community)
+- Modern web browser (Chrome, Firefox, Safari, or Edge)
 
-- Flask: Install Flask, a Python web framework, by running the following command in your command prompt or terminal: `pip install flask`
-- Web Browser: The application is compatible with modern web browsers such as Chrome, Firefox, Safari, or Edge. Ensure you have the latest version of Google Chrome installed on your machine to view the application.
-- MySQL Database: Install and set up MySQL database server on your machine. You can download MySQL Community Edition from the official website: dev.mysql.com/downloads.
-
-- MySQL Connector: Install the MySQL Connector Python library, which allows Python to communicate with the MySQL database. You can install it using the following command: `pip install mysql-connector-python`
+The following Python packages will be installed automatically via requirements.txt:
+- Flask: Web framework
+- pymongo: MongoDB driver for Python
+- python-dotenv: Environment variable management
+- Flask-Login: User session management
+- Werkzeug: Utilities for WSGI applications
 
 #### Database Configuration
-- Create a new database in MySQL for your Attendance Monitoring System.
-- Load the data from the db.sql file into the database  
-  Example command:  
-  `mysql -u root -p attendance_db < db.sql`
-  > **Note:**  
-  > Make sure you run this command from the directory where your `db.sql` file is located, or provide the full path to `db.sql`.  
-  > Example with full path:  
-  > `mysql -u root -p attendance_db < C:\Users\admin\Desktop\VSFILES\projects\Attendance_monitoring_system\db.sql`
-- Update the following details in the `app.py` code with your credentials
-    - Host: The hostname or IP address of the MySQL database server.
-    - Port: The port number on which MySQL is running (default is usually 3306).
-    - Database: The name of the database you created for the Attendance Monitoring System.
-    - Username: The username for accessing the MySQL database.
-    - Password: The password for the specified userna
+This project uses MongoDB as its database. Make sure you have MongoDB installed and running on your system.
+
+1. Install MongoDB Community Edition from the official website: https://www.mongodb.com/try/download/community
+2. Start the MongoDB service
+3. The application will automatically create the required collections in the database
 
 
 ### Installation
 
-1. Clone the repository: `git clone https://github.com/Sgvkamalakar/Attendance_monitoring_system.git`
-2. `pip install -r requirements.txt`
+1. Clone the repository
+2. Create and activate a virtual environment (optional but recommended):
+   ```bash
+   python -m venv venv
+   # On Windows:
+   venv\Scripts\activate
+   # On Unix or MacOS:
+   source venv/bin/activate
+   ```
+3. Install required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ### Usage
-1. Start the MySQL database server.
-2. Run the Flask application: `flask run`
-3. Open your web browser and enter the following URL: http://localhost:5000
-4. The application should now be running and connected to the MySQL database for data storage.
+1. Start MongoDB service on your machine
+2. Run the Flask application:
+   ```bash
+   python app.py
+   ```
+   or
+   ```bash
+   flask run
+   ```
+3. Open your web browser and visit: http://localhost:5000
+4. Login with the following default credentials:
+   - Admin:
+     - Username: admin
+     - Password: admin123
+   - Teacher/Student: Register through the admin interface
 
 ### Working
 To provide an overview of the working of the Attendance Monitoring System based on the mentioned requirements, here's a step-by-step explanation:

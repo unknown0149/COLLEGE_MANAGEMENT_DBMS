@@ -133,6 +133,29 @@
             </div>
         </div>
 
+        <div class="row g-4">
+            <!-- Events Card -->
+            <div class="col-md-4">
+                <div class="dashboard-card gradient-purple">
+                    <i class="fas fa-calendar-alt card-icon"></i>
+                    <h3 class="text-white mb-4">Upcoming Events</h3>
+                    {% if events %}
+                        <div class="list-group">
+                            {% for event in events %}
+                                <div class="list-group-item mb-2 rounded">
+                                    <h5 class="mb-1">{{ event.title }}</h5>
+                                    <p class="mb-1"><i class="fas fa-clock"></i> {{ event.date }}</p>
+                                    <small>{{ event.description }}</small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-white">No upcoming events.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
         <!-- Recent Events Section -->
         <div class="mt-5">
             <div class="card shadow-sm">

@@ -45,20 +45,19 @@
 <body>
     <div class="profile-card">
         <h2>Teacher Profile</h2>
-        <div class="profile-info mb-4">
-            <p><strong>Name:</strong> {{ profile_data[0] }}</p>
-            <p><strong>Email:</strong> {{ profile_data[1] }}</p>
-            <p><strong>Phone:</strong> {{ profile_data[2] }}</p>
+        <div class="profile-info mb-4">            <p><strong>Name:</strong> {{ teacher.teacher_name }}</p>
+            <p><strong>Email:</strong> {{ teacher.email }}</p>
+            <p><strong>Phone:</strong> {{ teacher.phone }}</p>
         </div>
         <form method="post" action="/teacher/update_profile">
             <div class="mb-3">
-                <input type="text" class="form-control" name="name" placeholder="Update Name" value="{{ profile_data[0] }}" required>
+                <input type="text" class="form-control" name="name" placeholder="Update Name" value="{{ teacher.teacher_name }}" required>
             </div>
             <div class="mb-3">
-                <input type="email" class="form-control" name="email" placeholder="Update Email" value="{{ profile_data[1] }}" required>
+                <input type="email" class="form-control" name="email" placeholder="Update Email" value="{{ teacher.email }}" required>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" name="phone" placeholder="Update Phone" value="{{ profile_data[2] }}" required>
+                <input type="text" class="form-control" name="phone" placeholder="Update Phone" value="{{ teacher.phone }}" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Update Profile</button>
         </form>
